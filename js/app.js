@@ -92,9 +92,9 @@ document.addEventListener('DOMContentLoaded', function() {
          },400);
         }
 
-       //if(openCardsList.length === 16) {
+       if(openCardsList.length === 16) {
          displayMessage();
-      // }
+       }
     }
  }// END OPENCARDS FUNCTION
 
