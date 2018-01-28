@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
  let sec = 0;
  let min = 0;
+ let time;
 
  /**
 * @description shuffle function - Represents a shuffle for the cards. We want to reorder the cards.
@@ -91,9 +92,9 @@ document.addEventListener('DOMContentLoaded', function() {
          },400);
         }
 
-       if(openCardsList.length === 16) {
+       //if(openCardsList.length === 16) {
          displayMessage();
-       }
+      // }
     }
  }// END OPENCARDS FUNCTION
 
@@ -127,6 +128,9 @@ function removeCards(evt) {
   }
 
   function displayMessage() {
+
+    stopTimer();
+
     let stars = '';
 
     if(counter < 25) {
@@ -173,7 +177,7 @@ function removeCards(evt) {
 
 
     playAgainLink.setAttribute('class','play-again-link');
-    playAgainLink.setAttribute('href','file:///Users/fernandoperez/Desktop/miprueba/fend-project-memory-game-master/index.html');
+    playAgainLink.setAttribute('href','index.html');
     playAgainLink.textContent = 'Play Again';
     divContainer[0].append(playAgainLink);
 
@@ -182,15 +186,14 @@ function removeCards(evt) {
 
   function timer() {
 
-    setInterval(function(){
+    time = setInterval(function(){
     sec = sec + 1;
     //min = Math.floor(sec/60);
     if(sec === 60) {
       min += 1;
       sec = 0;
     }
-    console.log(sec + 'seconds');
-    console.log(min + 'min');
+
     document.getElementsByClassName('sec')[0].append(sec);
     document.getElementsByClassName('sec')[0].firstChild.remove();
 
@@ -198,6 +201,11 @@ function removeCards(evt) {
     document.getElementsByClassName('min')[0].firstChild.remove();
     }, 1000);
   }
+
+  function stopTimer() {
+    clearInterval(time);
+
+}
 
   document.querySelector('.startButton').addEventListener('click', function (evt) {
       document.querySelector('.startButton').remove();
