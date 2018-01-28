@@ -27,6 +27,17 @@ document.addEventListener('DOMContentLoaded', function() {
  let spanCounter = document.getElementsByClassName('moves');
  spanCounter[0].append(counter);
 
+ let sec = 0;
+ let min = 0;
+
+ /**
+* @description shuffle function - Represents a shuffle for the cards. We want to reorder the cards.
+* @param {object} array - Represents the CardsList array. We need to use it in order to shuffle the cards.
+* @param {number} array.length - Returns a number with the array's length.
+* @param {string} temporaryValue - Returns the string stored in the array in that position.
+* @param {num} randomIndex - Returns a random number.
+*/
+
  function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -41,11 +52,23 @@ document.addEventListener('DOMContentLoaded', function() {
     return array;
  }
 
+ /**
+* @description displayCardSymbol function - When the card is hidden and the user clicks, displays openCards function.
+*/
+
  function displayCardSymbol(evt) {
    if((evt.target.nodeName === 'LI') && (evt.target.getAttribute('class') !== 'card open show') && (evt.target.getAttribute('class') !== 'card open show match')) {
         openCards(evt);
     }
  }
+
+ /**
+* @description openCards function - Represents a shuffle for the cards. We want to reorder the cards.
+* @param {object} array - Represents the CardsList array. We need to use it in order to shuffle the cards.
+* @param {number} array.length - Returns a number with the array's length.
+* @param {string} temporaryValue - Returns the string stored in the array in that position.
+* @param {num} randomIndex - Returns a random number.
+*/
 
  function openCards(evt) {
    evt.target.setAttribute('class','card open show');
@@ -144,8 +167,9 @@ function removeCards(evt) {
     const divContainer  = document.getElementsByClassName('you-win-message');
     divContainer[0].prepend(h2Message);
 
-    pMessage.textContent = 'You have scored'+ ' ' + stars +' ' + 'stars with' + ' ' + counter + ' ' + 'moves';
+    pMessage.textContent = 'You have scored'+ ' ' + stars +' ' + 'stars with' + ' ' + counter + ' ' + 'moves In' + ' '  + min + ' ' + 'minutes' +  ' ' + sec + ' ' + 'seconds';
     divContainer[0].append(pMessage);
+
 
 
     playAgainLink.setAttribute('class','play-again-link');
@@ -153,14 +177,42 @@ function removeCards(evt) {
     playAgainLink.textContent = 'Play Again';
     divContainer[0].append(playAgainLink);
 
+  } // END OF DISPLAY MESSAGE
+
+
+  function timer() {
+
+    setInterval(function(){
+    sec = sec + 1;
+    //min = Math.floor(sec/60);
+    if(sec === 60) {
+      min += 1;
+      sec = 0;
+    }
+    console.log(sec + 'seconds');
+    console.log(min + 'min');
+    document.getElementsByClassName('sec')[0].append(sec);
+    document.getElementsByClassName('sec')[0].firstChild.remove();
+
+    document.getElementsByClassName('min')[0].append(min);
+    document.getElementsByClassName('min')[0].firstChild.remove();
+    }, 1000);
   }
+
+  document.querySelector('.startButton').addEventListener('click', function (evt) {
+      document.querySelector('.startButton').remove();
+      timer();
+
+  });
+
+
 
    document.querySelector('.deck').addEventListener('click', function (evt) {
        displayCardSymbol(evt);
 
    });
 
-   console.log(shuffle(cardsList));
+   shuffle(cardsList);
 
    const fragment = document.createDocumentFragment();
 
