@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   'fa fa-cube'];
 
  let openCardsList = [];
+ const star = document.getElementsByClassName('fa fa-star');
  let counter = 0;
  console.log(counter);
  let spanCounter = document.getElementsByClassName('moves');
@@ -33,10 +34,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
- let stars = '';
+ let stars = 0;
 
  if(counter < 2) {
-   const star = document.getElementsByClassName('fa fa-star');
+
    star[0].classList.add('color');
    star[1].classList.add('color');
    star[2].classList.add('color');
@@ -64,6 +65,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     return array;
+ }
+
+ function deckFunction(evt) {
+   displayCardSymbol(evt);
  }
 
  /**
@@ -105,6 +110,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
        if(openCardsList.length === 16) {
          displayMessage();
+
+         /**
+         * @description Event Listener -restarts the game when click the play-again-link.
+         */
+
+         document.querySelector('.play-again-link').addEventListener('click', function (evt) {
+            stopTimer();
+            ressetGame();
+            document.querySelector('.you-win-message').classList.add('hidden');
+            document.querySelector('.startButton').classList.remove('hidden');
+            deck.removeEventListener('click', deckFunction);
+
+            star[0].classList.add('color');
+            star[1].classList.add('color');
+            star[2].classList.add('color');
+         });
        }
     }
  }// END OPENCARDS FUNCTION
@@ -174,6 +195,7 @@ function removeCards(evt) {
     }
   }
 
+
   /**
   * @description displayMessage function - Displays a  final message of congrats with your score and the time it takes you to finish the game. Stops the timer too.
                                            Different elements are created and inserted in the div message container.
@@ -202,9 +224,10 @@ function removeCards(evt) {
 
 
     playAgainLink.setAttribute('class','play-again-link');
-    playAgainLink.setAttribute('href','index.html');
     playAgainLink.textContent = 'Play Again';
     divContainer[0].append(playAgainLink);
+
+
 
   } // END OF DISPLAY MESSAGE
 
@@ -243,24 +266,70 @@ function removeCards(evt) {
 
 }
 
-  document.querySelector('.startButton').addEventListener('click', function (evt) {
-      document.querySelector('.startButton').remove();
-      timer();
-      document.querySelector('.deck').addEventListener('click', function (evt) {
-          displayCardSymbol(evt);
+/**
+* @description ressetGame function - Clear  the time, stars and array variables in order to restart the game. Adds styles to the stars.
 
-      });
+*/
+
+  function ressetGame() {
+    min = 0;
+    sec = 0;
+    stars = 0;
+    openCardsList = [];
+
+    let  myCards = document.querySelectorAll('.card,.open,.show,.match');
+    for(let i = 0; i < 16 ; i ++ ) {
+      myCards[i].setAttribute('class','card');
+    }
+
+
+    document.getElementsByClassName('sec')[0].append(sec);
+    document.getElementsByClassName('sec')[0].firstChild.remove();
+
+    document.getElementsByClassName('min')[0].append(min);
+    document.getElementsByClassName('min')[0].firstChild.remove();
+    spanCounter[0].firstChild.remove();
+    spanCounter[0].append(counter = 0);
+
+    star[0].classList.add('color');
+    star[1].classList.add('color');
+    star[2].classList.add('color');
+  }
+
+  /**
+  * @description Event Listener - Starts the game and hiddes the button .startButton.
+
+  */
+
+
+  document.querySelector('.startButton').addEventListener('click', function (evt) {
+
+      openCardsList = [];
+      document.querySelector('.startButton').classList.add('hidden');
+      timer();
+
+      deck.addEventListener('click', deckFunction);
 
   });
 
+  /**
+  * @description Event Listener -restarts the game when click the reload link.
+  */
 
+  document.querySelector('.restart').addEventListener('click', function () {
+      ressetGame();
+      stopTimer();
+      document.querySelector('.startButton').classList.remove('hidden');
+      deck.removeEventListener('click', deckFunction);
 
+      star[0].classList.add('color');
+      star[1].classList.add('color');
+      star[2].classList.add('color');
+  });
 
 
    shuffle(cardsList);
 
-
-   console.log(cardsList);
 
    const fragment = document.createDocumentFragment();
 
