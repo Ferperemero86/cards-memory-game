@@ -77,11 +77,10 @@ document.addEventListener('DOMContentLoaded', function() {
  }
 
  /**
-* @description openCards function - Represents a shuffle for the cards. We want to reorder the cards.
-* @param {object} array - Represents the CardsList array. We need to use it in order to shuffle the cards.
-* @param {number} array.length - Returns a number with the array's length.
-* @param {string} temporaryValue - Returns the string stored in the array in that position.
-* @param {num} randomIndex - Returns a random number.
+* @description openCards function - Checks in the openCardsList array if the cards match and if that array is complete with the 16 cards
+                                    in order to display the congrats message.
+* @param {}  openCard- gets the child element content atribute of the 'Li' clicked in the event.
+* @param {}  cardPositionVal - Returns the number position of the element in the openCardsList array
 */
 
  function openCards(evt) {
@@ -110,6 +109,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
  }// END OPENCARDS FUNCTION
 
+ /**
+* @description matchCards function - Gets the child atribute content of the 'Li' clicked in the event and sets the new atribute with match class
+                                     in order to show the cards.
+* @param {}  attributes- Gets the child element content atribute of the 'Li' clicked in the event.
+* @param {}  matchElements - Select the elements with the same attribute.
+*/
+
 function matchCards(evt) {
  var attributes = evt.target.firstChild.getAttribute('class');
  var matchElements = document.getElementsByClassName(attributes);
@@ -118,6 +124,14 @@ function matchCards(evt) {
      matchElements[i].parentElement.setAttribute('class','card open show match');
    }
 }
+
+/**
+* @description removeCards function - Removes the cards from the openCardsList array and  sets the cards deleted just with the card class in order to hide them.
+* @param {}  lastElement- Gets the child element content atribute of the 'Li' clicked in the event.
+* @param {}  matchLastElement - Select the elements with the same attribute.
+* @param {}  beforeElement  -  Gets the content of the element before the last one in the openCardsList array.
+* @param {}  matchBeforeElement - Select the elements with the same attribute.
+*/
 
 function removeCards(evt) {
   let lastElement = evt.target.firstChild.getAttribute('class');
@@ -133,6 +147,12 @@ function removeCards(evt) {
 
   openCardsList.splice(-2,2);
  }
+
+ /**
+ * @description countCards function - Keeps a  track of the movements and add styles to the stars depending on the number of movements done.
+ * @param {} counter - Keeps storing the number of movemetns done.
+ * @param {} stars - sets a value depending on the movements done.
+ */
 
   function countCards() {
     spanCounter[0].firstChild.remove();
@@ -153,6 +173,12 @@ function removeCards(evt) {
 
     }
   }
+
+  /**
+  * @description displayMessage function - Displays a  final message of congrats with your score and the time it takes you to finish the game. Stops the timer too.
+                                           Different elements are created and inserted in the div message container.
+
+  */
 
   function displayMessage() {
 
@@ -182,6 +208,12 @@ function removeCards(evt) {
 
   } // END OF DISPLAY MESSAGE
 
+  /**
+  * @description timer function - Displays the min and seconds you are sepending to win the game.
+  * @param {} time - Contains the setInterval function.
+  * @param {} sec - contains the seconds updated everytime with the setInterval function.
+  * @param {} min - contains the minutes updated everytime with the setInterval function.
+  */
 
   function timer() {
 
@@ -200,6 +232,11 @@ function removeCards(evt) {
     document.getElementsByClassName('min')[0].firstChild.remove();
     }, 1000);
   }
+
+  /**
+  * @description stopTimer function - Clear the variables contained in the setInterval function.
+
+  */
 
   function stopTimer() {
     clearInterval(time);
