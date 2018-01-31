@@ -103,9 +103,9 @@ document.addEventListener('DOMContentLoaded', function() {
          },400);
         }
 
-       if(openCardsList.length === 16) {
+      // if(openCardsList.length === 16) {
          displayMessage();
-       }
+      // }
     }
  }// END OPENCARDS FUNCTION
 
@@ -246,17 +246,21 @@ function removeCards(evt) {
   document.querySelector('.startButton').addEventListener('click', function (evt) {
       document.querySelector('.startButton').remove();
       timer();
+      document.querySelector('.deck').addEventListener('click', function (evt) {
+          displayCardSymbol(evt);
+
+      });
 
   });
 
 
 
-   document.querySelector('.deck').addEventListener('click', function (evt) {
-       displayCardSymbol(evt);
 
-   });
 
    shuffle(cardsList);
+
+
+   console.log(cardsList);
 
    const fragment = document.createDocumentFragment();
 
