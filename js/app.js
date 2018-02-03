@@ -100,12 +100,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if(openCardsList[cardPositionVal] === openCardsList[openCardsList.length-2]) {
           setTimeout(function() {
            matchCards(evt);
-         },400);
+         });
 
         }  else {
-          setTimeout(function() {
-           removeCards(evt);
-         },400);
+
+        removeCards(evt);
+
         }
 
        if(openCardsList.length === 16) {
@@ -155,18 +155,23 @@ function matchCards(evt) {
 */
 
 function removeCards(evt) {
+
   let lastElement = evt.target.firstChild.getAttribute('class');
   let matchLastElement = document.getElementsByClassName(lastElement);
 
   let beforeElement = openCardsList[openCardsList.length -2 ];
   let matchBeforeElement = document.getElementsByClassName(beforeElement);
 
-  for(let i = 0; i < 2 ; i ++ ) {
-  matchLastElement[i].parentElement.setAttribute('class','card');
-  matchBeforeElement[i].parentElement.setAttribute('class','card');
-  }
-
   openCardsList.splice(-2,2);
+
+  setTimeout(function() {
+    for(let i = 0; i < 2 ; i ++ ) {
+    matchLastElement[i].parentElement.setAttribute('class','card');
+    matchBeforeElement[i].parentElement.setAttribute('class','card');
+    }
+  },400);
+
+  console.log(openCardsList);
  }
 
  /**
