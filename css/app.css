@@ -199,8 +199,9 @@ h2 {
 .timer {
   overflow: hidden;
   list-style-type: none;
-  width:50%;
-  margin: 0 15% 30px 35%;
+  width: 50%;
+  margin: 0 0 30px 0;
+  text-align: center;
 }
 
 .timer li {
